@@ -17,17 +17,26 @@ export interface EducationEntry {
   status: "completed" | "current";
 }
 
+export interface ProjectSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+}
+
 export interface Project {
   slug: string;
   title: string;
   dateRange: string;
   summary: string;
   fullDescription?: string;
+  sections?: ProjectSection[];
   techStack: string[];
   teamOrSolo: string;
-  highlights: string[];
+  highlights?: string[];
   imageUrl?: string;
   images?: string[];
+  /** Screenshot orientation for the detail slideshow and card thumbnail. Defaults to landscape. */
+  imageAspect?: "landscape" | "portrait";
   liveUrl?: string;
   repoUrl?: string;
 }
@@ -98,6 +107,104 @@ export const profile: Profile = {
     },
   ],
   projects: [
+    {
+      slug: "quickfixhub-mobile",
+      title: "QuickFixHub — Cross-Platform Service Marketplace",
+      dateRange: "2026",
+      imageAspect: "portrait",
+      imageUrl: "/projects/quickfixhub-mobile/qfh-1.jpg",
+      images: [
+        "/projects/quickfixhub-mobile/qfh-1.jpg",
+        "/projects/quickfixhub-mobile/qfh-2.jpg",
+        "/projects/quickfixhub-mobile/qfh-3.jpg",
+        "/projects/quickfixhub-mobile/qfh-4.jpg",
+        "/projects/quickfixhub-mobile/qfh-5.jpg",
+        "/projects/quickfixhub-mobile/qfh-6.jpg",
+        "/projects/quickfixhub-mobile/qfh-7.jpg",
+        "/projects/quickfixhub-mobile/qfh-8.jpg",
+        "/projects/quickfixhub-mobile/qfh-9.jpg",
+        "/projects/quickfixhub-mobile/qfh-10.jpg",
+        "/projects/quickfixhub-mobile/qfh-11.jpg",
+        "/projects/quickfixhub-mobile/qfh-12.jpg",
+        "/projects/quickfixhub-mobile/qfh-13.jpg",
+        "/projects/quickfixhub-mobile/qfh-14.jpg",
+        "/projects/quickfixhub-mobile/qfh-15.jpg",
+        "/projects/quickfixhub-mobile/qfh-16.jpg",
+        "/projects/quickfixhub-mobile/qfh-17.jpg",
+        "/projects/quickfixhub-mobile/qfh-18.jpg",
+        "/projects/quickfixhub-mobile/qfh-19.jpg",
+        "/projects/quickfixhub-mobile/qfh-20.jpg",
+        "/projects/quickfixhub-mobile/qfh-21.jpg",
+        "/projects/quickfixhub-mobile/qfh-22.jpg",
+        "/projects/quickfixhub-mobile/qfh-23.jpg",
+        "/projects/quickfixhub-mobile/qfh-24.jpg",
+        "/projects/quickfixhub-mobile/qfh-25.jpg",
+        "/projects/quickfixhub-mobile/qfh-26.jpg",
+        "/projects/quickfixhub-mobile/qfh-27.jpg",
+        "/projects/quickfixhub-mobile/qfh-28.jpg",
+        "/projects/quickfixhub-mobile/qfh-29.jpg",
+        "/projects/quickfixhub-mobile/qfh-30.jpg",
+        "/projects/quickfixhub-mobile/qfh-31.jpg",
+      ],
+      summary:
+        "Full-stack, cross-platform service marketplace (React Native + Spring Boot) with customer, provider, and admin apps — booking, chat, verification, and payments.",
+      fullDescription:
+        "A cross-platform marketplace that connects customers with verified local service providers — plumbing, electrical, cleaning, repairs — for on-demand home jobs. Designed and built solo, end-to-end: a React Native (Expo) app and a Spring Boot API serving three distinct product surfaces — customer, provider, and admin.",
+      sections: [
+        {
+          heading: "What it does",
+          paragraphs: [
+            "Customers discover providers by category, name or city, or a map radius search (device location plus Haversine distance), view profiles with ratings and pricing, request a booking, track it through a live status timeline, chat with the provider, and leave a tagged review.",
+            "Providers onboard a business profile, set service pricing and weekly availability, upload verification documents, and work incoming jobs from a dashboard (accept → en route → in progress → complete).",
+            "Admins review submitted documents in a verification queue (approve, reject, or request more), watch live platform stats, and issue refunds.",
+          ],
+        },
+        {
+          heading: "Architecture & engineering",
+          bullets: [
+            "Stateless auth — short-lived JWT access tokens with rotating, DB-hashed opaque refresh tokens that can be revoked; Redis-backed login rate limiting; timing-attack-safe login to close an email-enumeration side channel; email-based password reset with single-use, attempt-capped codes.",
+            "Guarded booking state machine — every transition is an ownership-scoped endpoint with per-transition timestamps, a 30-minute accept window with automatic expiry, and cancellation rules; the app renders a history timeline with no separate audit table.",
+            "Transactional email over SMTP — welcome, password-reset, and security-alert mail sent asynchronously and best-effort, so a failed send never breaks the request that triggered it; a Mailpit container captures it all in local development.",
+            "Schema discipline — 23 sequential Flyway migrations with Hibernate in validate mode, so entities and schema can never silently drift.",
+            "Pragmatic search — Spring Data Specifications compose optional filters; radius search does an in-memory Haversine pass, the right trade-off at this scale and swappable later.",
+            "Typed API client with automatic token refresh and single-flight retry on 401s.",
+            "Dockerised local stack (PostgreSQL, Redis, Mailpit); OpenAPI/Swagger docs.",
+          ],
+        },
+        {
+          heading: "Notable constraints I designed around",
+          bullets: [
+            "Staying on Expo Go (no custom dev client) meant no native map module and no OS push — I render maps through the Google Maps JavaScript API in a WebView and built an in-app, polled notification centre whose data model is already push-ready.",
+            "Running Spring with open-in-view disabled surfaced lazy-loading and Hibernate flush-ordering pitfalls in DTO mapping and replace-all writes, which I fixed with explicit fetching and transaction boundaries.",
+          ],
+        },
+        {
+          heading: "Scope notes",
+          paragraphs: [
+            "Payments are a mocked ledger — a Payment row is created when a booking completes, which is enough for real receipts and admin refunds, and the schema was built to drop a real gateway in behind it. Chat and notifications poll rather than stream.",
+          ],
+        },
+      ],
+      techStack: [
+        "React Native",
+        "Expo Router",
+        "TypeScript",
+        "TanStack Query",
+        "Spring Boot 4",
+        "Java 21",
+        "Spring Security",
+        "Spring Data JPA",
+        "PostgreSQL 16",
+        "Redis 7",
+        "Flyway",
+        "JWT",
+        "Docker",
+        "Swagger / OpenAPI",
+      ],
+      teamOrSolo: "Solo — designed and built end-to-end",
+      liveUrl: "",
+      repoUrl: "https://github.com/Bimsara-Sanduneth/quickfixhub-mobile",
+    },
     {
       slug: "todo-web-application",
       title: "ToDo Web Application",

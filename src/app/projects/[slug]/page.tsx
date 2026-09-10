@@ -65,15 +65,29 @@ export default async function ProjectDetailPage({
       </div>
 
       {project.images && project.images.length > 0 ? (
-        <ProjectImageSlideshow images={project.images} alt={project.title} />
+        <ProjectImageSlideshow
+          images={project.images}
+          alt={project.title}
+          aspect={project.imageAspect}
+        />
       ) : (
         project.imageUrl && (
-          <div className="relative mt-10 aspect-video overflow-hidden rounded-lg border bg-muted">
+          <div
+            className={`relative mt-10 overflow-hidden rounded-lg border bg-muted ${
+              project.imageAspect === "portrait"
+                ? "mx-auto aspect-[9/20] w-full max-w-[300px]"
+                : "aspect-video"
+            }`}
+          >
             <Image
               src={project.imageUrl}
               alt={`${project.title} screenshot`}
               fill
-              className="object-cover object-top"
+              className={
+                project.imageAspect === "portrait"
+                  ? "object-cover"
+                  : "object-cover object-top"
+              }
             />
           </div>
         )
@@ -113,14 +127,39 @@ export default async function ProjectDetailPage({
         </section>
       )}
 
-      <section className="mt-16">
-        <h2 className="text-2xl font-semibold tracking-tight">Highlights</h2>
-        <ul className="mt-6 list-disc space-y-3 pl-5 text-base text-muted-foreground marker:text-primary">
-          {project.highlights.map((highlight) => (
-            <li key={highlight}>{highlight}</li>
+      {project.sections?.map((section) => (
+        <section key={section.heading} className="mt-16">
+          <h2 className="text-2xl font-semibold tracking-tight">
+            {section.heading}
+          </h2>
+          {section.paragraphs?.map((paragraph) => (
+            <p
+              key={paragraph}
+              className="mt-6 text-base leading-relaxed text-muted-foreground"
+            >
+              {paragraph}
+            </p>
           ))}
-        </ul>
-      </section>
+          {section.bullets && section.bullets.length > 0 && (
+            <ul className="mt-6 list-disc space-y-3 pl-5 text-base text-muted-foreground marker:text-primary">
+              {section.bullets.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))}
+
+      {project.highlights && project.highlights.length > 0 && (
+        <section className="mt-16">
+          <h2 className="text-2xl font-semibold tracking-tight">Highlights</h2>
+          <ul className="mt-6 list-disc space-y-3 pl-5 text-base text-muted-foreground marker:text-primary">
+            {project.highlights.map((highlight) => (
+              <li key={highlight}>{highlight}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="mt-16">
         <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>

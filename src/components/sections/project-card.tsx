@@ -26,7 +26,11 @@ export function ProjectCard({ project }: { project: Project }) {
               src={project.imageUrl}
               alt={`${project.title} screenshot`}
               fill
-              className="object-cover object-top"
+              className={
+                project.imageAspect === "portrait"
+                  ? "object-cover object-[center_25%]"
+                  : "object-cover object-top"
+              }
             />
           </div>
         )}
