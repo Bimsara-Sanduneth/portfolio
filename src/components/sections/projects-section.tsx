@@ -6,26 +6,37 @@ export function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="mx-auto max-w-6xl scroll-mt-20 border-t px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+      className="px-6 py-28 md:px-12 lg:px-20"
+      style={{
+        background:
+          "radial-gradient(ellipse 70% 50% at 50% 100%, rgba(var(--glow-violet-rgb), 0.08) 0%, transparent 70%)",
+      }}
     >
-      <Reveal>
-        <div className="space-y-4">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Projects
-          </h2>
-          <p className="text-justify text-base text-muted-foreground sm:text-lg">
-            Explore a collection of projects where I turn ideas into
-            practical software solutions, from full-stack applications to
-            mobile and technology-driven systems.
-          </p>
+      <div className="mx-auto max-w-7xl">
+        <Reveal>
+          <div className="mb-16 flex flex-col justify-between md:flex-row md:items-end">
+            <div>
+              <p className="font-mono-data mb-4 text-xs tracking-widest text-[var(--brand)]">
+                03 — PROJECTS
+              </p>
+              <h2 className="font-display text-4xl font-bold md:text-5xl">
+                Selected <em className="gradient-text not-italic">Work</em>
+              </h2>
+            </div>
+            <p className="mt-4 max-w-xs text-sm text-[var(--text-muted)] md:mt-0">
+              A curated selection of full-stack, mobile, and
+              hardware-integrated projects I&apos;ve shipped.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {profile.projects.map((project, index) => (
+            <Reveal key={project.slug} delay={index * 75}>
+              <ProjectCard project={project} index={index} />
+            </Reveal>
+          ))}
         </div>
-      </Reveal>
-      <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {profile.projects.map((project, index) => (
-          <Reveal key={project.slug} delay={index * 75}>
-            <ProjectCard project={project} />
-          </Reveal>
-        ))}
       </div>
     </section>
   );

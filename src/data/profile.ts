@@ -99,11 +99,11 @@ export const profile: Profile = {
     },
     {
       category: "Database",
-      skills: ["MySQL", "PostgreSQL"],
+      skills: ["MySQL", "PostgreSQL", "MongoDB"],
     },
     {
       category: "Tools & Platforms",
-      skills: ["GitHub", "IoT"],
+      skills: ["GitHub", "VS Code", "Postman", "Figma", "IoT"],
     },
   ],
   projects: [

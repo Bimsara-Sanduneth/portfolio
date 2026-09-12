@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -7,8 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-outfit), "Outfit", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --font-display: var(--font-fraunces), "Fraunces", serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -35,63 +37,101 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.75rem;
 
-  /* Neutral white / slate-gray base */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.208 0.042 265.755);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.208 0.042 265.755);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.208 0.042 265.755);
+  /* Light theme: airy near-white canvas, deep-indigo text, violet accent */
+  --background: #faf9ff;
+  --foreground: #1e1b2e;
+  --card: #ffffff;
+  --card-foreground: #1e1b2e;
+  --popover: #ffffff;
+  --popover-foreground: #1e1b2e;
 
-  /* Deep navy accent */
-  --primary: oklch(0.379 0.146 265.522);
-  --primary-foreground: oklch(0.984 0.003 247.858);
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
 
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.929 0.013 255.508);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --secondary: #f1eefc;
+  --secondary-foreground: #1e1b2e;
+  --muted: #f1eefc;
+  --muted-foreground: #5b5470;
+  --accent: #ede9fe;
+  --accent-foreground: #1e1b2e;
 
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.488 0.243 264.376);
+  --destructive: #e11d48;
+  --border: rgba(124, 58, 237, 0.15);
+  --input: rgba(124, 58, 237, 0.18);
+  --ring: #7c3aed;
 
-  /* Pulse background: kept subtle on the light, near-white base */
-  --pulse-opacity: 0.3;
+  /* Bespoke design-system tokens used across the hand-styled sections */
+  --page-bg: #faf9ff;
+  --text-strong: #1e1b2e;
+  --text-muted: #5b5470;
+  --text-faint: #a39cc0;
+  --card-bg: #ffffff;
+  --tile-bg: #f3f0fb;
+
+  --brand: #7c3aed;
+  --brand-soft: #6d28d9;
+  --brand-strong: #7c3aed;
+  --brand-deep: #6d28d9;
+  --icon-invert: #1e1b2e;
+
+  --border-violet-rgb: 124, 58, 237;
+  --glow-violet-rgb: 124, 58, 237;
+  --overlay-rgb: 250, 249, 255;
+  --badge-bg-rgb: 255, 255, 255;
+  --glow-text-alpha: 0.18;
 }
 
 .dark {
-  /* Near-black / slate base */
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
+  /* Dark theme: near-black canvas with a violet glow palette */
+  --background: #07070f;
+  --foreground: #f0eeff;
+  --card: #0f0f1e;
+  --card-foreground: #e8e0ff;
+  --popover: #0f0f1e;
+  --popover-foreground: #e8e0ff;
 
-  /* Same navy accent, lifted for contrast on dark */
-  --primary: oklch(0.546 0.245 262.881);
-  --primary-foreground: oklch(0.984 0.003 247.858);
+  --primary: #a78bfa;
+  --primary-foreground: #07070f;
 
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.372 0.044 257.287);
-  --accent-foreground: oklch(0.984 0.003 247.858);
+  --secondary: #1a1a2e;
+  --secondary-foreground: #c4b5fd;
+  --muted: #13131f;
+  --muted-foreground: #8b7db5;
+  --accent: #7c3aed;
+  --accent-foreground: #f0eeff;
 
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.546 0.245 262.881);
+  --destructive: #f43f5e;
+  --border: rgba(167, 139, 250, 0.12);
+  --input: rgba(167, 139, 250, 0.15);
+  --ring: #a78bfa;
 
-  /* Pulse background: a touch stronger to stay visible on the near-black base */
-  --pulse-opacity: 0.4;
+  --page-bg: #07070f;
+  --text-strong: #f0eeff;
+  --text-muted: #8b7db5;
+  --text-faint: #4a4060;
+  --card-bg: #0f0f1e;
+  --tile-bg: #13131f;
+
+  --brand: #a78bfa;
+  --brand-soft: #c4b5fd;
+  --brand-strong: #7c3aed;
+  --brand-deep: #6d28d9;
+  --icon-invert: #ffffff;
+
+  --border-violet-rgb: 167, 139, 250;
+  --glow-violet-rgb: 124, 58, 237;
+  --overlay-rgb: 7, 7, 15;
+  --badge-bg-rgb: 13, 13, 26;
+  --glow-text-alpha: 0.6;
+}
+
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
 }
 
 html {
@@ -109,12 +149,168 @@ html {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
   h1,
   h2,
   h3,
   h4 {
-    @apply font-semibold tracking-tight text-balance;
+    @apply font-display font-bold tracking-tight text-balance;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-data {
+  font-family: var(--font-mono);
+}
+
+.glow-text {
+  text-shadow: 0 0 40px rgba(var(--glow-violet-rgb), var(--glow-text-alpha));
+}
+
+.border-glow {
+  border: 1px solid rgba(var(--border-violet-rgb), 0.2);
+  box-shadow:
+    inset 0 0 20px rgba(var(--glow-violet-rgb), 0.05),
+    0 0 20px rgba(var(--glow-violet-rgb), 0.08);
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--brand-soft) 0%,
+    var(--brand) 40%,
+    var(--brand-strong) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-gradient {
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      rgba(var(--glow-violet-rgb), 0.2) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 40% 40% at 80% 20%,
+      rgba(var(--border-violet-rgb), 0.1) 0%,
+      transparent 60%
+    ),
+    var(--page-bg);
+}
+
+.card-hover {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--border-violet-rgb), 0.4);
+  box-shadow:
+    0 20px 60px rgba(var(--glow-violet-rgb), 0.2),
+    0 0 30px rgba(var(--glow-violet-rgb), 0.1);
+}
+
+.nav-link {
+  position: relative;
+  transition: color 0.2s;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--brand);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(var(--border-violet-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      rgba(var(--border-violet-rgb), 0.05) 1px,
+      transparent 1px
+    );
+  background-size: 60px 60px;
+}
+
+.tag {
+  background: rgba(var(--glow-violet-rgb), 0.12);
+  border: 1px solid rgba(var(--border-violet-rgb), 0.25);
+  color: var(--brand-soft);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  display: inline-block;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.7s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-slide-up {
+    animation: none;
   }
 }

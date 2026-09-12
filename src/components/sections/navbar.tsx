@@ -3,24 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { profile } from "@/data/profile";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const sectionLinks = [
-  { hash: "home", label: "Home" },
+  { hash: "about", label: "About" },
   { hash: "skills", label: "Skills" },
   { hash: "projects", label: "Projects" },
-  { hash: "about", label: "About" },
+  { hash: "education", label: "Education" },
   { hash: "contact", label: "Contact" },
 ];
 
@@ -28,7 +21,7 @@ export function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeHash, setActiveHash] = useState("home");
+  const [activeHash, setActiveHash] = useState("about");
 
   // Highlight the nav link for whichever section is currently in view.
   useEffect(() => {
@@ -59,11 +52,18 @@ export function Navbar() {
   const isActive = (hash: string) => isHome && activeHash === hash;
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <>
+      <header
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 md:px-12"
+        style={{
+          background: "rgba(var(--overlay-rgb), 0.85)",
+          backdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(var(--border-violet-rgb), 0.08)",
+        }}
+      >
         <Link
-          href="/"
-          className="truncate text-base font-semibold tracking-tight"
+          href={hrefFor("about")}
+          className="font-display gradient-text truncate text-xl font-bold tracking-tight"
         >
           {profile.name}
         </Link>
@@ -74,52 +74,66 @@ export function Navbar() {
               key={link.hash}
               href={hrefFor(link.hash)}
               className={cn(
-                "text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-                isActive(link.hash) && "text-foreground"
+                "nav-link text-sm font-medium tracking-wide text-[var(--text-muted)] transition-colors hover:text-[var(--brand-soft)]",
+                isActive(link.hash) && "active text-[var(--brand)]"
               )}
             >
               {link.label}
             </Link>
           ))}
+          <ThemeToggle className="ml-2" />
+          <Link
+            href={hrefFor("contact")}
+            className="ml-2 rounded-full px-5 py-2 text-sm font-semibold text-white transition-all hover:scale-105"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--brand-strong), var(--brand))",
+              boxShadow: "0 0 20px rgba(var(--glow-violet-rgb), 0.4)",
+            }}
+          >
+            Say Hello
+          </Link>
         </nav>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-3 md:hidden">
           <ThemeToggle />
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            aria-label="Open menu"
-            onClick={() => setMobileOpen(true)}
+          <button
+            className="text-[var(--brand)]"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileOpen((open) => !open)}
           >
-            <Menu className="size-5" />
-          </Button>
+            {mobileOpen ? (
+              <X className="size-6" />
+            ) : (
+              <Menu className="size-6" />
+            )}
+          </button>
         </div>
-      </div>
+      </header>
 
-      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="right">
-          <SheetHeader>
-            <SheetTitle>{profile.name}</SheetTitle>
-          </SheetHeader>
-          <nav className="flex flex-col gap-1 px-4">
-            {sectionLinks.map((link) => (
-              <Link
-                key={link.hash}
-                href={hrefFor(link.hash)}
-                onClick={() => setMobileOpen(false)}
-                className={cn(
-                  "rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
-                  isActive(link.hash) && "bg-accent text-foreground"
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </SheetContent>
-      </Sheet>
-    </header>
+      {/* Rendered as a sibling of <header>, not a child — the header's
+          backdrop-filter would otherwise become this element's containing
+          block and break `fixed inset-0` positioning. */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
+          style={{ background: "rgba(var(--overlay-rgb), 0.97)" }}
+        >
+          {sectionLinks.map((link) => (
+            <Link
+              key={link.hash}
+              href={hrefFor(link.hash)}
+              onClick={() => setMobileOpen(false)}
+              className={cn(
+                "font-display text-3xl font-bold text-[var(--brand-soft)] transition-all hover:text-[var(--brand)]",
+                isActive(link.hash) && "gradient-text"
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </>
   );
 }

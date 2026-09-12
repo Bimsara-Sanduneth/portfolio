@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -65,9 +64,14 @@ export function ContactForm() {
     }
   }
 
+  const inputClass =
+    "rounded-xl border border-[var(--input)] bg-[var(--tile-bg)] px-4 py-3 text-sm text-[var(--text-strong)] placeholder:text-[var(--text-faint)] focus-visible:border-[var(--brand)] focus-visible:ring-0";
+  const labelClass =
+    "font-mono-data mb-2 block text-xs tracking-widest text-[var(--text-muted)]";
+
   if (status === "success") {
     return (
-      <p className="rounded-md border bg-muted/50 px-4 py-3 text-sm text-muted-foreground">
+      <p className="border-glow rounded-xl px-4 py-3 text-sm text-[var(--text-muted)]">
         Thanks for reaching out! I&apos;ll get back to you as soon as I can.
       </p>
     );
@@ -81,9 +85,13 @@ export function ContactForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel className={labelClass}>NAME</FormLabel>
               <FormControl>
-                <Input placeholder="Your name" {...field} />
+                <Input
+                  placeholder="Your name"
+                  className={inputClass}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,11 +102,12 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className={labelClass}>EMAIL</FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="your@email.com"
+                  className={inputClass}
                   {...field}
                 />
               </FormControl>
@@ -111,11 +120,11 @@ export function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel className={labelClass}>MESSAGE</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="What would you like to say?"
-                  className="min-h-32"
+                  placeholder="Tell me about your project..."
+                  className={`min-h-32 resize-none ${inputClass}`}
                   {...field}
                 />
               </FormControl>
@@ -125,15 +134,24 @@ export function ContactForm() {
         />
 
         {status === "error" && (
-          <p className="text-sm text-destructive">
+          <p className="text-sm text-[var(--destructive)]">
             Something went wrong sending your message. Please try again, or
             email me directly.
           </p>
         )}
 
-        <Button type="submit" disabled={status === "submitting"}>
-          {status === "submitting" ? "Sending…" : "Send Message"}
-        </Button>
+        <button
+          type="submit"
+          disabled={status === "submitting"}
+          className="w-full rounded-xl py-4 font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
+          style={{
+            background:
+              "linear-gradient(135deg, var(--brand-deep), var(--brand))",
+            boxShadow: "0 0 40px rgba(var(--glow-violet-rgb), 0.4)",
+          }}
+        >
+          {status === "submitting" ? "Sending…" : "Send Message ✦"}
+        </button>
       </form>
     </Form>
   );

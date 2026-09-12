@@ -4,8 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, FolderGit2 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ProjectImageSlideshow } from "@/components/project-image-slideshow";
 import { getProjectBySlug, profile } from "@/data/profile";
 
@@ -43,21 +41,23 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
+  const isPortrait = project.imageAspect === "portrait";
+
   return (
-    <main className="mx-auto max-w-4xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+    <main className="mx-auto max-w-4xl px-6 pt-32 pb-20 md:px-12">
       <Link
         href="/#projects"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="font-mono-data inline-flex items-center gap-1.5 text-xs tracking-wide text-[var(--text-muted)] transition-colors hover:text-[var(--brand)]"
       >
         <ArrowLeft className="size-4" />
         Back to projects
       </Link>
 
       <div className="mt-8 space-y-3">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+        <h1 className="font-display text-4xl font-bold tracking-tight text-[var(--text-strong)] sm:text-5xl">
           {project.title}
         </h1>
-        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+        <div className="font-mono-data flex flex-wrap items-center gap-2 text-xs text-[var(--text-muted)]">
           {project.dateRange && <span>{project.dateRange}</span>}
           {project.dateRange && <span aria-hidden>•</span>}
           <span>{project.teamOrSolo}</span>
@@ -73,10 +73,8 @@ export default async function ProjectDetailPage({
       ) : (
         project.imageUrl && (
           <div
-            className={`relative mt-10 overflow-hidden rounded-lg border bg-muted ${
-              project.imageAspect === "portrait"
-                ? "mx-auto aspect-[9/20] w-full max-w-[300px]"
-                : "aspect-video"
+            className={`border-glow relative mt-10 aspect-video overflow-hidden rounded-2xl ${
+              isPortrait ? "bg-white" : "bg-[var(--card-bg)]"
             }`}
           >
             <Image
@@ -84,9 +82,7 @@ export default async function ProjectDetailPage({
               alt={`${project.title} screenshot`}
               fill
               className={
-                project.imageAspect === "portrait"
-                  ? "object-cover"
-                  : "object-cover object-top"
+                isPortrait ? "object-contain p-6" : "object-cover object-top"
               }
             />
           </div>
@@ -96,32 +92,43 @@ export default async function ProjectDetailPage({
       {(project.liveUrl || project.repoUrl) && (
         <div className="mt-8 flex flex-wrap gap-3">
           {project.liveUrl && (
-            <Button asChild>
-              <a href={project.liveUrl} target="_blank" rel="noreferrer">
-                <ExternalLink className="size-4" />
-                Live Demo
-              </a>
-            </Button>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-105"
+              style={{
+                background:
+                  "linear-gradient(135deg, var(--brand-deep), var(--brand))",
+                boxShadow: "0 0 30px rgba(var(--glow-violet-rgb), 0.4)",
+              }}
+            >
+              <ExternalLink className="size-4" />
+              Live Demo
+            </a>
           )}
           {project.repoUrl && (
-            <Button asChild variant="outline">
-              <a href={project.repoUrl} target="_blank" rel="noreferrer">
-                <FolderGit2 className="size-4" />
-                Repository
-              </a>
-            </Button>
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="border-glow inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[var(--brand-soft)] transition-all hover:text-[var(--brand)]"
+            >
+              <FolderGit2 className="size-4" />
+              Repository
+            </a>
           )}
         </div>
       )}
 
-      <p className="mt-10 text-lg leading-relaxed text-muted-foreground">
+      <p className="mt-10 text-lg leading-relaxed text-[var(--text-muted)]">
         {project.summary}
       </p>
 
       {project.fullDescription && (
         <section className="mt-16">
-          <h2 className="text-2xl font-semibold tracking-tight">Overview</h2>
-          <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+          <h2 className="text-2xl font-bold tracking-tight">Overview</h2>
+          <p className="mt-6 text-base leading-relaxed text-[var(--text-muted)]">
             {project.fullDescription}
           </p>
         </section>
@@ -129,19 +136,19 @@ export default async function ProjectDetailPage({
 
       {project.sections?.map((section) => (
         <section key={section.heading} className="mt-16">
-          <h2 className="text-2xl font-semibold tracking-tight">
+          <h2 className="text-2xl font-bold tracking-tight">
             {section.heading}
           </h2>
           {section.paragraphs?.map((paragraph) => (
             <p
               key={paragraph}
-              className="mt-6 text-base leading-relaxed text-muted-foreground"
+              className="mt-6 text-base leading-relaxed text-[var(--text-muted)]"
             >
               {paragraph}
             </p>
           ))}
           {section.bullets && section.bullets.length > 0 && (
-            <ul className="mt-6 list-disc space-y-3 pl-5 text-base text-muted-foreground marker:text-primary">
+            <ul className="mt-6 list-disc space-y-3 pl-5 text-base text-[var(--text-muted)] marker:text-[var(--brand)]">
               {section.bullets.map((bullet) => (
                 <li key={bullet}>{bullet}</li>
               ))}
@@ -152,8 +159,8 @@ export default async function ProjectDetailPage({
 
       {project.highlights && project.highlights.length > 0 && (
         <section className="mt-16">
-          <h2 className="text-2xl font-semibold tracking-tight">Highlights</h2>
-          <ul className="mt-6 list-disc space-y-3 pl-5 text-base text-muted-foreground marker:text-primary">
+          <h2 className="text-2xl font-bold tracking-tight">Highlights</h2>
+          <ul className="mt-6 list-disc space-y-3 pl-5 text-base text-[var(--text-muted)] marker:text-[var(--brand)]">
             {project.highlights.map((highlight) => (
               <li key={highlight}>{highlight}</li>
             ))}
@@ -162,12 +169,12 @@ export default async function ProjectDetailPage({
       )}
 
       <section className="mt-16">
-        <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Tech Stack</h2>
         <div className="mt-6 flex flex-wrap gap-2">
           {project.techStack.map((tech) => (
-            <Badge key={tech} variant="secondary">
+            <span key={tech} className="tag">
               {tech}
-            </Badge>
+            </span>
           ))}
         </div>
       </section>

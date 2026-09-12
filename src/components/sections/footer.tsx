@@ -1,45 +1,39 @@
-import { FolderGit2, Link2, Mail } from "lucide-react";
-
 import { profile } from "@/data/profile";
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   const links = [
-    profile.social.github && {
-      href: profile.social.github,
-      label: "GitHub",
-      icon: FolderGit2,
-    },
+    profile.social.github && { href: profile.social.github, label: "GitHub" },
     profile.social.linkedin && {
       href: profile.social.linkedin,
       label: "LinkedIn",
-      icon: Link2,
     },
     profile.social.email && {
       href: `mailto:${profile.social.email}`,
       label: "Email",
-      icon: Mail,
     },
-  ].filter(Boolean) as { href: string; label: string; icon: typeof Mail }[];
+  ].filter(Boolean) as { href: string; label: string }[];
 
   return (
-    <footer className="relative z-10 border-t bg-background">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-12 sm:flex-row sm:justify-between sm:px-6 lg:px-8">
-        <p className="text-sm text-muted-foreground">
-          © {year} {profile.name}. All rights reserved.
+    <footer
+      className="relative z-10 border-t px-6 py-8 text-center md:px-12"
+      style={{ borderColor: "rgba(var(--border-violet-rgb), 0.08)" }}
+    >
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between">
+        <p className="font-mono-data text-xs text-[var(--text-faint)]">
+          © {year} {profile.name} — Built with intent
         </p>
         {links.length > 0 && (
-          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-            {links.map(({ href, label, icon: Icon }) => (
+          <nav className="flex flex-wrap items-center justify-center gap-6">
+            {links.map(({ href, label }) => (
               <a
                 key={label}
                 href={href}
                 target={label === "Email" ? undefined : "_blank"}
                 rel={label === "Email" ? undefined : "noreferrer"}
-                className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="font-mono-data text-xs tracking-wide text-[var(--text-muted)] transition-colors hover:text-[var(--brand)]"
               >
-                <Icon className="size-4" />
                 {label}
               </a>
             ))}

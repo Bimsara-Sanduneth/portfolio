@@ -31,10 +31,8 @@ export function ProjectImageSlideshow({
 
   return (
     <div
-      className={`relative mt-10 overflow-hidden rounded-lg border bg-muted ${
-        isPortrait
-          ? "mx-auto aspect-[9/20] w-full max-w-[300px] rounded-2xl"
-          : "aspect-video"
+      className={`border-glow relative mt-10 aspect-video overflow-hidden rounded-2xl ${
+        isPortrait ? "bg-white" : "bg-[var(--card)]"
       }`}
     >
       {images.map((src, index) => (
@@ -45,7 +43,7 @@ export function ProjectImageSlideshow({
           fill
           priority={index === 0}
           className={`transition-opacity duration-1000 ease-in-out ${
-            isPortrait ? "object-cover" : "object-cover object-top"
+            isPortrait ? "object-contain p-6" : "object-cover object-top"
           } ${index === activeIndex ? "opacity-100" : "opacity-0"}`}
         />
       ))}
@@ -59,9 +57,13 @@ export function ProjectImageSlideshow({
               aria-label={`Show screenshot ${index + 1}`}
               onClick={() => setActiveIndex(index)}
               className={`h-1.5 rounded-full transition-all ${
-                index === activeIndex
-                  ? "w-5 bg-white"
-                  : "w-1.5 bg-white/50 hover:bg-white/75"
+                isPortrait
+                  ? index === activeIndex
+                    ? "w-5 bg-[#7c3aed]"
+                    : "w-1.5 bg-[#7c3aed]/30 hover:bg-[#7c3aed]/60"
+                  : index === activeIndex
+                    ? "w-5 bg-white"
+                    : "w-1.5 bg-white/50 hover:bg-white/75"
               }`}
             />
           ))}

@@ -1,7 +1,5 @@
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ContactForm } from "@/components/sections/contact-form";
 import { Reveal } from "@/components/reveal";
 import { profile } from "@/data/profile";
@@ -46,12 +44,6 @@ export function ContactSection() {
     href?: string;
   }[];
 
-  const infoTileColors = [
-    "bg-rose-500/15 text-rose-500",
-    "bg-emerald-500/15 text-emerald-500",
-    "bg-sky-500/15 text-sky-500",
-  ];
-
   const socialItems = [
     github && {
       icon: GithubIcon,
@@ -78,37 +70,50 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="mx-auto max-w-6xl scroll-mt-20 border-t px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+      className="px-6 py-28 md:px-12 lg:px-20"
+      style={{
+        background:
+          "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(var(--glow-violet-rgb), 0.12) 0%, transparent 70%)",
+      }}
     >
-      <Reveal>
-        <div className="space-y-4">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Let&apos;s Build Something Together
+      <div className="mx-auto max-w-7xl">
+        <Reveal>
+          <p className="font-mono-data mb-6 text-xs tracking-widest text-[var(--brand)]">
+            05 — CONTACT
+          </p>
+          <h2 className="font-display mb-6 text-4xl leading-tight font-bold md:text-6xl">
+            Let&apos;s build something
+            <br />
+            <em className="gradient-text glow-text not-italic">
+              extraordinary
+            </em>
           </h2>
-          <p className="text-justify text-lg text-muted-foreground">
+          <p className="text-justify text-lg leading-relaxed text-[var(--text-muted)]">
             Have a project idea, a technical challenge, or an interesting
             idea to discuss? Feel free to reach out. I&apos;m always open to
             connecting, collaborating, and building meaningful software
             solutions.
           </p>
-          <Button asChild size="lg" className="w-fit">
-            <a
-              href={`mailto:${email}?subject=Let's build something together`}
-            >
-              <Mail className="size-4" />
-              Say Hello
-            </a>
-          </Button>
-        </div>
-      </Reveal>
+          <a
+            href={`mailto:${email}?subject=Let's build something together`}
+            className="mt-8 inline-flex w-fit items-center gap-2 rounded-full px-8 py-3.5 font-semibold text-white transition-all hover:scale-105"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--brand-deep), var(--brand))",
+              boxShadow: "0 0 30px rgba(var(--glow-violet-rgb), 0.5)",
+            }}
+          >
+            <Mail className="size-4" />
+            Say Hello
+          </a>
+        </Reveal>
 
-      <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
-        {/* Block 1: contact info + socials, unified */}
-        <Reveal delay={75} className="h-full">
-          <Card className="h-full">
-            <CardContent className="flex h-full flex-col justify-center space-y-6">
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+          {/* Block 1: contact info + socials, unified */}
+          <Reveal delay={75} className="h-full">
+            <div className="border-glow flex h-full flex-col justify-center space-y-6 rounded-2xl bg-[var(--card-bg)] p-8">
               <div className="flex items-center gap-3">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-amber-500/15 text-amber-500">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-strong)]/15 text-[var(--brand)]">
                   <Mail className="size-5" />
                 </span>
                 <h3 className="text-xl font-bold tracking-tight">
@@ -117,19 +122,19 @@ export function ContactSection() {
               </div>
 
               <div className="space-y-5">
-                {infoItems.map(({ icon: Icon, label, value, href }, i) => {
+                {infoItems.map(({ icon: Icon, label, value, href }) => {
                   const content = (
                     <>
-                      <span
-                        className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${infoTileColors[i % infoTileColors.length]}`}
-                      >
+                      <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-strong)]/15 text-[var(--brand)]">
                         <Icon className="size-5" />
                       </span>
                       <span className="flex flex-col">
-                        <span className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                        <span className="font-mono-data text-xs tracking-wide text-[var(--text-muted)] uppercase">
                           {label}
                         </span>
-                        <span className="font-semibold">{value}</span>
+                        <span className="font-semibold text-[var(--text-strong)]">
+                          {value}
+                        </span>
                       </span>
                     </>
                   );
@@ -158,38 +163,41 @@ export function ContactSection() {
                         <Icon className="size-5" />
                       </span>
                       <span className="flex flex-1 flex-col">
-                        <span className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                        <span className="font-mono-data text-xs tracking-wide text-[var(--text-muted)] uppercase">
                           {label}
                         </span>
-                        <span className="font-semibold">{value}</span>
+                        <span className="font-semibold text-[var(--text-strong)]">
+                          {value}
+                        </span>
                       </span>
-                      <Button asChild variant="outline" size="sm">
-                        <a href={href} target="_blank" rel="noreferrer">
-                          Visit
-                          <ArrowUpRight className="size-3.5" />
-                        </a>
-                      </Button>
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border-glow inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-[var(--brand-soft)] transition-colors hover:text-[var(--brand)]"
+                      >
+                        Visit
+                        <ArrowUpRight className="size-3.5" />
+                      </a>
                     </div>
                   )
                 )}
               </div>
-            </CardContent>
-          </Card>
-        </Reveal>
+            </div>
+          </Reveal>
 
-        {/* Block 2: message form */}
-        <Reveal delay={150} className="h-full">
-          <Card className="h-full">
-            <CardContent>
-              <h3 className="text-xl font-semibold tracking-tight">
+          {/* Block 2: message form */}
+          <Reveal delay={150} className="h-full">
+            <div className="border-glow h-full rounded-2xl bg-[var(--card-bg)] p-8">
+              <h3 className="text-xl font-bold tracking-tight">
                 Send a message
               </h3>
               <div className="mt-8">
                 <ContactForm />
               </div>
-            </CardContent>
-          </Card>
-        </Reveal>
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
