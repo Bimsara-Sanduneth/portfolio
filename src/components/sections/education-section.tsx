@@ -54,6 +54,9 @@ export function EducationSection() {
                 <p className="max-w-xl leading-relaxed text-[var(--text-muted)]">
                   {entry.location}
                 </p>
+                {entry.detail && (
+                  <span className="tag mt-3">{entry.detail}</span>
+                )}
               </div>
             </Reveal>
           ))}

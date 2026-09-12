@@ -15,6 +15,8 @@ export interface EducationEntry {
   location: string;
   level: "school" | "undergraduate";
   status: "completed" | "current";
+  /** Exam/result line, e.g. GCE A/L results or current CGPA. */
+  detail?: string;
 }
 
 export interface ProjectSection {
@@ -76,26 +78,36 @@ export const profile: Profile = {
       location: "Monaragala",
       level: "school",
       status: "completed",
+      detail:
+        "GCE A/L 2022 (2023) — Physical Science stream, ABB (A in Chemistry)",
     },
     {
       institution: "University of Moratuwa, Faculty of Information Technology",
       location: "Moratuwa, Sri Lanka",
       level: "undergraduate",
+      detail: "CGPA: 3.76",
       status: "current",
     },
   ],
   skills: [
     {
       category: "Languages",
-      skills: ["JavaScript", "TypeScript", "Java 21", "PHP", "C"],
+      skills: ["JavaScript", "TypeScript", "Java 21", "PHP", "C", "C#"],
     },
     {
       category: "Frontend",
-      skills: ["HTML5", "CSS", "Tailwind CSS", "React.js", "Next.js"],
+      skills: [
+        "HTML5",
+        "CSS",
+        "Tailwind CSS",
+        "React.js",
+        "Next.js",
+        "React Native",
+      ],
     },
     {
       category: "Backend",
-      skills: ["Node.js", "Spring Boot", "PDO", "JWT auth"],
+      skills: ["Node.js", "Spring Boot", "PDO", "JWT auth", ".NET"],
     },
     {
       category: "Database",
@@ -103,7 +115,15 @@ export const profile: Profile = {
     },
     {
       category: "Tools & Platforms",
-      skills: ["GitHub", "VS Code", "Postman", "Figma", "IoT"],
+      skills: [
+        "GitHub",
+        "VS Code",
+        "Postman",
+        "Figma",
+        "IoT",
+        "Docker",
+        "Expo",
+      ],
     },
   ],
   projects: [
